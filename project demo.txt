@@ -1,0 +1,85 @@
+Loyiha Strukturasining Asosiy Qismlari
+------------------------------------------------------------Modellar (Models)
+User:
+
+Foydalanuvchi profili uchun, AbstractUser dan meros olish orqali.
+Qo'shimcha maydonlar: profile_picture, date_of_birth, is_verified.
+Category:
+
+Mahsulotni kategoriya bo'yicha tasniflash uchun, slug maydoni bilan.
+SubCategory: Kategoriyalarni chuqurroq tasniflash uchun, ForeignKey orqali Category ga bog'lanadi.
+Product:
+
+Mahsulot ma'lumotlari (nomi, tavsifi, narxi, zaxiradagi miqdori, kategoriya, rasmlar).
+Qo'shimcha maydonlar: rating, discount, is_active, created_at.
+Cart:
+
+Foydalanuvchining savatchasi va undagi mahsulotlar.
+CartHistory: Foydalanuvchi savatchasi o'zgarishlarini saqlash uchun.
+CartItem:
+
+Savatchadagi har bir mahsulot uchun alohida model (miqdor, narx).
+Qo'shimcha maydonlar: added_at.
+Order:
+
+Buyurtmalar uchun asosiy model, foydalanuvchi, buyurtma sanasi, umumiy summa, buyurtma statusi, to'lov usuli.
+
+
+Review:
+
+Mahsulotlar uchun foydalanuvchi sharhlari (reyting, matn, sanasi).
+
+-----------------------------------------------------------------------Serializerlar
+UserSerializer:
+
+Foydalanuvchi ma'lumotlari uchun, maxfiylikni ta'minlash uchun password maydonini maxfiy qilish.
+Qo'shimcha maydonlar: profile_picture, date_of_birth.
+ProductSerializer:
+
+Mahsulot ma'lumotlarini qaytarish uchun, image maydonini qo'shish va discount_price ni ko'rsatish.
+CategorySerializer:
+
+Mahsulot kategoriyasini yaratish va tahrirlash uchun, SubCategory ni qo'shish.
+CartSerializer:
+
+Savatcha uchun, CartItemlarni ko'rsatish, umumiy summani hisoblash.
+OrderSerializer:
+
+Buyurtmalarni yaratish va tarixini ko‘rsatish uchun, OrderItemlarni qo'shish va buyurtma holatini yangilash.
+ReviewSerializer:
+
+Mahsulot sharhlarini yaratish va ko'rsatish uchun.
+
+-------------------------------------------------------------------------------Viewlar
+User Registration va Login API:
+
+Foydalanuvchi ro'yxatdan o'tishi va kirishi, JWT yordamida autentifikatsiya.
+Product Management API:
+
+Mahsulotlarni boshqarish (CRUD), bulk_update va bulk_delete funksiyalarini qo'shish.
+Category API:
+
+Kategoriyalarni boshqarish va SubCategorylar bilan ishlash.
+Cart API:
+
+Savatchaga mahsulot qo'shish, o'chirish, ko'rish va savatcha tarixini ko'rish.
+Order API:
+
+Buyurtmalarni yaratish, tarixni ko'rish, buyurtma holatini yangilash, to'lovni boshqarish.
+Review API:
+
+Mahsulotlarga sharhlar qo'shish, ko'rish va o'chirish.
+Filtrlash va Ruxsatlar
+Filterlar:
+
+django-filter orqali mahsulotlarni kategoriya, narx, reyting va chegirmalar bo'yicha filtrlash.
+Ruxsatlar (Permissions):
+
+Mahsulot yaratish, o'chirish va tahrirlash faqat adminlar uchun; foydalanuvchilar o'z savatchalarini boshqarishlari,
+buyurtmalarini ko'rishlari va o'z buyurtmalarini o'zgartirishlari mumkin.
+
+
+-----------------------------------------------------------------------------API Dokumentatsiyasi
+Swagger yoki drf_spectacular:
+API hujjatlarini yaratish, har bir endpoint va ularning ishlashi haqida batafsil ma'lumot.
+OpenAPI va schema validation qo'shish.
