@@ -18,24 +18,27 @@ class Order(BaseCreatedModel):
         CashMoney = 'CashMoney'
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders')
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='orders_product')
-    product_quantity = models.IntegerField()
-    total_price = models.IntegerField()
-    status = models.CharField(max_length=25, choices=Status)
-    payment_method = models.CharField(max_length=25, choices=Payment_Method)
+    product_quantity = models.IntegerField(blank=True, null=True)
+    status = models.CharField(max_length=25, default='Shipping',  blank=True, null=True, choices=Status)
+    payment_method = models.CharField(max_length=25, default='OnlinePraise', blank=True, null=True, choices=Payment_Method)
+
+    @property
+    def total_price(self):
+        return sum(item.total_price for item in self.order_item.all())
 
     def __str__(self):
-        return f'{self.product.name}'
+        return f'Order #{self.id}'
 
 
 class OrderItem(BaseCreatedModel):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='order_item')
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='product_order_item')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_order_item')
     quantity = models.IntegerField()
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.DecimalField(max_digits=10, decimal_places=2, editable=False)
 
+    @property
     def total_price(self):
         return self.quantity * self.price
 
-    def __str__(self):
-        return f'{self.product.name}'
+

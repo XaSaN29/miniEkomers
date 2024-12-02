@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from orders.models import Order
+from orders.models import Order, OrderItem
 
 
 # Register your models here.
@@ -8,4 +8,9 @@ from orders.models import Order
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user')
+    list_display = ('user', 'total_price', 'total_items', 'status', 'payment_method')
+
+
+@admin.register(OrderItem)
+class OrderItemAdmin(admin.ModelAdmin):
+    list_display = ('order', 'product', 'user', 'quantity', 'total_price')
