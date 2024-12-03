@@ -30,7 +30,7 @@ class ProductListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ['id', 'name', 'description', 'quantity', 'price', 'subcategory']
+        fields = ['id', 'name', 'description', 'quantity', 'price', 'average_rating', 'subcategory']
 
 
 class ReviewCreateSerializer(serializers.ModelSerializer):
@@ -39,14 +39,6 @@ class ReviewCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
         fields = ['id', 'product_id', 'rating', 'comment', 'created_at']
-        # extra_kwargs = {
-        #     'comment': {'required': False, 'allow_blank': True, 'default': ''}
-        # }
-
-    def create(self, validated_data):
-        product = get_object_or_404(Product, id=validated_data['product_id'])
-        validated_data['product'] = product
-        return super().create(validated_data)
 
 
 class ReviewListSerializer(serializers.ModelSerializer):

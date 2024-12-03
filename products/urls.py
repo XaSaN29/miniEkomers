@@ -12,7 +12,7 @@ urlpatterns = [
     path('product-list/', ProductListAPIView.as_view(), name='product_list'),
     path('product-create/', ProductCreateAPIView.as_view(), name='product_create'),
     # Product comment
-    path('product-comment-create/<int:product_id>/', ReviewCreateAPIView.as_view(), name='product_comment_create'),
+    path('product-comment-create/', ReviewCreateAPIView.as_view(), name='product_comment_create'),
     path('product-comment-list/', ReviewListAPIView.as_view(), name='product_comment_list'),
     # Product category or subcategory
     path('category-create/', CategoryCreateAPIView.as_view(), name='category_create'),

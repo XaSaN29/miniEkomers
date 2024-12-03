@@ -82,7 +82,6 @@ class Product(BaseCreatedModel):
     ratio = models.ManyToManyField(Ratio)
     sale = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)])
     slug = models.SlugField(max_length=255, unique=True, editable=False)
-    rating = models.FloatField(default=0.0, editable=False)
 
     def __str__(self):
         return self.name
@@ -96,10 +95,12 @@ class Product(BaseCreatedModel):
         super().save(*args, force_insert=force_insert, force_update=force_update, using=using,
                      update_fields=update_fields)
 
+    def average_rating(self):
+        return self.reviews.aggregate(models.Avg('rating'))['rating__avg'] or 0
+
     @property
     def sale_price(self):
         return self.price - (self.price * self.sale) / 100
-
 
 
 class ProductImage(models.Model):

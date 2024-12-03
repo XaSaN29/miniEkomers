@@ -27,26 +27,10 @@ class ProductCreateAPIView(CreateAPIView):
     serializer_class = ProductCreateSerializer
 
 
-class ReviewCreateAPIView(APIView):
+class ReviewCreateAPIView(CreateAPIView):
+    queryset = Review.objects.all()
+    serializer_class = ReviewCreateSerializer
 
-    @extend_schema(
-        request=ReviewCreateSerializer
-    )
-    def post(self, request, product_id):
-        # Mahsulotni topish
-        product = get_object_or_404(Product, id=product_id)
-
-        # Serializerni tekshirish
-        serializer = ReviewCreateSerializer(data=request.data)
-        if serializer.is_valid():
-            # Yangi review yaratish
-            review = serializer.save(product=product)
-
-            # Mahsulotning reytingini yangilash
-            product.update_rating()  # Endi faqat update_rating() chaqiramiz
-
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ReviewListAPIView(ListAPIView):
     queryset = Review.objects.all()

@@ -8,7 +8,7 @@ from orders.models import Order, OrderItem
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('user', 'total_price', 'total_items', 'status', 'payment_method')
+    list_display = ('user', 'total_price', 'status', 'payment_method')
 
 
 @admin.register(OrderItem)

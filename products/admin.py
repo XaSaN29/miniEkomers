@@ -43,7 +43,7 @@ class ProductImageInlabe(admin.StackedInline):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'id', 'price', 'sale_price')
+    list_display = ('name', 'id', 'price', 'sale_price', 'average_rating')
     list_filter = ('subcategory', 'is_active')
     inlines = [ProductImageInlabe, ]
 
