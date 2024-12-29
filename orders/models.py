@@ -33,12 +33,10 @@ class Order(BaseCreatedModel):
 class OrderItem(BaseCreatedModel):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='order_item')
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='product_order_item')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_order_item')
     quantity = models.IntegerField()
-    price = models.DecimalField(max_digits=10, decimal_places=2, editable=False)
 
     @property
     def total_price(self):
-        return self.quantity * self.price
+        return self.quantity * self.product.price
 
 
